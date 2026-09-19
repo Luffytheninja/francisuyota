@@ -15,7 +15,7 @@ interface FeatureBannerSectionProps {
 export default function FeatureBannerSection({ project, onOpenShowreel, onSelectProject }: FeatureBannerSectionProps) {
   const thumbnailUrl = project.poster
     ? urlFor(project.poster).width(1600).height(680).url()
-    : `https://img.youtube.com/vi/${project.youtubeId}/maxresdefault.jpg`;
+    : `https://img.youtube.com/vi/${project.youtubeId}/hqdefault.jpg`;
 
   return (
     <div className="w-full bg-[#3FA360] pb-16 px-4 sm:px-8 lg:px-12">

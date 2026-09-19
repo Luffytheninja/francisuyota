@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
@@ -26,15 +26,22 @@ export default function PageClient({ projects }: PageClientProps) {
   const [isArchiveOpen, setIsArchiveOpen] = useState(false);
 
   const heroProject = projects[0] ?? null;
-  const featureBannerProject = projects[1] ?? projects[0] ?? null;
+  const featureBannerProject =
+    projects.find((p) => p.featured && p._id !== heroProject?._id) ??
+    (projects.length > 1 ? projects[1] : null);
 
-  // Filter by Sanity category values
-  const showcaseProjects = projects.filter(
-    (p) => p.category === 'documentary' || p.category === 'music' || p.category === 'fashion' || p.category === 'short-films'
+  const movieProjects = projects.filter(
+    (p) =>
+      p.category === 'movies' ||
+      p.category === 'movie' ||
+      p.category === 'short-films' ||
+      p.category === 'narrative' ||
+      p.category === 'events'
   );
-  const eventsProjects = projects.filter((p) => p.category === 'events');
-  const gradedProjects = projects.filter((p) => p.category === 'graded-edited');
-  const picnicProjects = projects.filter((p) => p.category === 'picnic');
+
+  const docProjects = projects.filter(
+    (p) => p.category === 'documentary' || p.category === 'documentaries'
+  );
 
   return (
     <main className="relative min-h-screen bg-[#0E100F] text-[#141716] overflow-x-hidden">
@@ -43,6 +50,7 @@ export default function PageClient({ projects }: PageClientProps) {
 
       {/* Global Minimal Header Navigation */}
       <Navbar
+        projectsCount={projects.length}
         onOpenShowreel={() => setIsShowreelOpen(true)}
         onOpenArchive={() => setIsArchiveOpen(true)}
       />
@@ -62,23 +70,23 @@ export default function PageClient({ projects }: PageClientProps) {
         onOpenArchive={() => setIsArchiveOpen(true)}
       />
 
-      {/* Section 3: Movies / Events placeholder */}
-      <MoviesSection
-        movies={eventsProjects.length > 0 ? eventsProjects : projects.slice(0, 2)}
-        onSelectProject={(p) => setSelectedProject(p)}
-      />
+      {/* Section 3: Movies / Short Films */}
+      {movieProjects.length > 0 && (
+        <MoviesSection
+          movies={movieProjects}
+          onSelectProject={(p) => setSelectedProject(p)}
+        />
+      )}
 
       {/* Section 4: Documentaries */}
-      <DocumentariesSection
-        documentaries={
-          projects.filter((p) => p.category === 'documentary').length > 0
-            ? projects.filter((p) => p.category === 'documentary')
-            : projects.slice(0, 2)
-        }
-        onSelectProject={(p) => setSelectedProject(p)}
-      />
+      {docProjects.length > 0 && (
+        <DocumentariesSection
+          documentaries={docProjects}
+          onSelectProject={(p) => setSelectedProject(p)}
+        />
+      )}
 
-      {/* Section 5: View More */}
+      {/* Section 5: View More / Archive CTA */}
       <ViewMoreSection onOpenArchive={() => setIsArchiveOpen(true)} />
 
       {/* Section 6: Feature Visual Frame Banner */}

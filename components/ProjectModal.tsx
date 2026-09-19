@@ -34,7 +34,7 @@ export default function ProjectModal({ project, onClose, onSelectProject, projec
 
   const thumbnailUrl = project.poster
     ? urlFor(project.poster).width(1280).height(720).url()
-    : `https://img.youtube.com/vi/${project.youtubeId}/maxresdefault.jpg`;
+    : `https://img.youtube.com/vi/${project.youtubeId}/hqdefault.jpg`;
 
   // Find next project
   const currentIndex = projects.findIndex((p) => p._id === project._id);

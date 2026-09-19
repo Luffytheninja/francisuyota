@@ -24,7 +24,7 @@ export default function HeroSection({ projects, heroProject, onOpenShowreel, onS
   const getThumbnail = (p: Project | null) => {
     if (!p) return '';
     if (p.poster) return urlFor(p.poster).width(1400).height(788).url();
-    return `https://img.youtube.com/vi/${p.youtubeId}/maxresdefault.jpg`;
+    return `https://img.youtube.com/vi/${p.youtubeId}/hqdefault.jpg`;
   };
 
   // Auto-cycle hero through portfolio every 6 seconds

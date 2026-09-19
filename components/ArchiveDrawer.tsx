@@ -20,16 +20,10 @@ export default function ArchiveDrawer({ isOpen, onClose, onSelectProject, projec
 
   if (!isOpen) return null;
 
-  const categories = [
-    'All',
-    'documentary',
-    'events',
-    'fashion',
-    'graded-edited',
-    'music',
-    'picnic',
-    'short-films',
-  ];
+  const dynamicCategories = Array.from(
+    new Set(projects.map((p) => p.category).filter(Boolean))
+  ).sort();
+  const categories = ['All', ...dynamicCategories];
 
   const filteredProjects = projects.filter((p) => {
     const matchesSearch = p.title.toLowerCase().includes(searchTerm.toLowerCase());
@@ -39,7 +33,7 @@ export default function ArchiveDrawer({ isOpen, onClose, onSelectProject, projec
 
   const getThumbnail = (p: Project) => {
     if (p.poster) return urlFor(p.poster).width(96).height(96).url();
-    return `https://img.youtube.com/vi/${p.youtubeId}/default.jpg`;
+    return `https://img.youtube.com/vi/${p.youtubeId}/hqdefault.jpg`;
   };
 
   return (

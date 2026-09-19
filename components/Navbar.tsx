@@ -7,9 +7,10 @@ import { Play, Menu, X, Sparkles } from 'lucide-react';
 interface NavbarProps {
   onOpenShowreel: () => void;
   onOpenArchive: () => void;
+  projectsCount?: number;
 }
 
-export default function Navbar({ onOpenShowreel, onOpenArchive }: NavbarProps) {
+export default function Navbar({ onOpenShowreel, onOpenArchive, projectsCount = 0 }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -112,7 +113,7 @@ export default function Navbar({ onOpenShowreel, onOpenArchive }: NavbarProps) {
               }`}
             >
               <Sparkles className="w-3 h-3 text-[#D4F88D]" />
-              Index (08)
+              Index ({projectsCount < 10 ? `0${projectsCount}` : projectsCount})
             </button>
 
             <button
@@ -180,7 +181,7 @@ export default function Navbar({ onOpenShowreel, onOpenArchive }: NavbarProps) {
                 className="text-left py-2 border-b border-white/10 text-[#D4F88D] flex items-center justify-between"
               >
                 <span>Full Project Archive</span>
-                <span className="text-sm font-normal text-white/50">8 Projects</span>
+                <span className="text-sm font-normal text-white/50">{projectsCount} {projectsCount === 1 ? 'Project' : 'Projects'}</span>
               </button>
             </div>
 
