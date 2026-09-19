@@ -5,6 +5,11 @@ export const metadata: Metadata = {
   title: 'UYOTA — Cinematographer & Director of Photography',
   description: 'Director of Photography and Colorist crafting visceral, textured visuals for narrative cinema, commercials, and evocative documentaries. ARRI, RED, Sony Venice.',
   keywords: ['Cinematographer', 'Director of Photography', 'DoP', 'Uyota', 'Lagos Cinematography', 'Film', 'ARRI Alexa 35', 'Colorist'],
+  icons: {
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+    apple: '/favicon.png',
+  },
   openGraph: {
     title: 'UYOTA — Cinematography Portfolio',
     description: 'Selected cinematography, feature films, and commercial showreel.',
