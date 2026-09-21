@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Menu, X, Sparkles } from 'lucide-react';
+import { Play, X, Menu } from 'lucide-react';
+import Link from 'next/link';
 
 interface NavbarProps {
   onOpenShowreel: () => void;
@@ -10,195 +11,215 @@ interface NavbarProps {
   projectsCount?: number;
 }
 
+const navLinks = [
+  { label: '01 / Uyota Verse', href: '#hero', scroll: 'hero' },
+  { label: '02 / Works', href: '#works', scroll: 'works' },
+  { label: '03 / Services', href: '/services', scroll: null },
+  { label: '04 / Contact', href: '#contact', scroll: 'contact' },
+];
+
 export default function Navbar({ onOpenShowreel, onOpenArchive, projectsCount = 0 }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 40) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setIsScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const scrollToSection = (id: string) => {
-    setMobileMenuOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+  const scrollTo = (id: string | null) => {
+    setMenuOpen(false);
+    if (!id) return;
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <>
+      {/* ── Header ─────────────────────────────────────────────────────────── */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${
           isScrolled
-            ? 'py-3 bg-[#0B0D0C]/85 backdrop-blur-md text-white border-b border-white/10 shadow-lg'
-            : 'py-6 bg-transparent text-[#141716]'
+            ? 'py-3 bg-[#FFFAB3]/90 backdrop-blur-lg border-b border-black/10 shadow-sm'
+            : 'py-5 bg-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 sm:px-10 flex items-center justify-between">
-          {/* Logo / Brand */}
+        <div className="max-w-6xl mx-auto px-4 sm:px-8 flex items-center justify-between">
+          {/* Brand */}
           <a
             href="#hero"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('hero');
-            }}
-            className="group flex items-center gap-2"
+            onClick={(e) => { e.preventDefault(); scrollTo('hero'); }}
+            className="group flex flex-col leading-none cursor-pointer"
           >
             <span
-              className={`text-xl sm:text-2xl font-black tracking-tighter uppercase transition-colors duration-300 ${
-                isScrolled ? 'text-[#D4F88D]' : 'text-[#141716] group-hover:text-[#43B07E]'
-              }`}
-              style={{ fontFamily: 'var(--font-slackey)' }}
+              className="text-base sm:text-lg font-black text-[#0B0D0C] tracking-tight group-hover:text-[#50BF8E] transition-colors duration-200"
+              style={{ fontFamily: 'var(--font-encode-sans)' }}
             >
-              UYOTA
+              Francis Uyota
             </span>
-            <span className="hidden sm:inline-block text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-full bg-black/10 dark:bg-white/10">
-              DoP / Cinematography
+            <span className="text-[10px] font-semibold text-[#0B0D0C]/60 tracking-widest uppercase">
+              Filmmaker · Ibadan
             </span>
           </a>
 
-          {/* Desktop Nav Links */}
-          <nav className="hidden md:flex items-center gap-8 text-xs font-bold uppercase tracking-widest">
-            <button
-              onClick={() => scrollToSection('showcase')}
-              className={`transition-colors hover:opacity-100 ${
-                isScrolled ? 'text-white/80 hover:text-[#D4F88D]' : 'text-[#141716]/80 hover:text-black'
-              }`}
-            >
-              Videos
-            </button>
-            <button
-              onClick={() => scrollToSection('movies')}
-              className={`transition-colors hover:opacity-100 ${
-                isScrolled ? 'text-white/80 hover:text-[#D4F88D]' : 'text-[#141716]/80 hover:text-black'
-              }`}
-            >
-              Work & Films
-            </button>
-            <button
-              onClick={() => scrollToSection('about')}
-              className={`transition-colors hover:opacity-100 ${
-                isScrolled ? 'text-white/80 hover:text-[#D4F88D]' : 'text-[#141716]/80 hover:text-black'
-              }`}
-            >
-              About
-            </button>
-            <button
-              onClick={() => scrollToSection('contact')}
-              className={`transition-colors hover:opacity-100 ${
-                isScrolled ? 'text-white/80 hover:text-[#D4F88D]' : 'text-[#141716]/80 hover:text-black'
-              }`}
-            >
-              Contact
-            </button>
+          {/* Desktop Floating Nav Pill matching wireframe */}
+          <nav className="hidden md:flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#50BF8E] border border-black/15 shadow-md shadow-[#50BF8E]/20">
+            {navLinks.map((link) =>
+              link.scroll ? (
+                <button
+                  key={link.label}
+                  onClick={() => scrollTo(link.scroll)}
+                  className="px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-[#0B0D0C] hover:bg-black/10 transition-colors"
+                  style={{ fontFamily: 'var(--font-encode-sans)' }}
+                >
+                  {link.label.split('/ ')[1]}
+                </button>
+              ) : (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className="px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-[#0B0D0C] hover:bg-black/10 transition-colors"
+                  style={{ fontFamily: 'var(--font-encode-sans)' }}
+                >
+                  {link.label.split('/ ')[1]}
+                </Link>
+              )
+            )}
           </nav>
 
-          {/* Right Action Pill Buttons */}
+          {/* Right Actions */}
           <div className="flex items-center gap-3">
+            {/* Contact Me CTA from wireframe */}
             <button
-              onClick={onOpenArchive}
-              className={`hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider border transition-all ${
-                isScrolled
-                  ? 'border-white/20 text-white/90 hover:bg-white/10'
-                  : 'border-black/20 text-black hover:bg-black/10'
-              }`}
+              onClick={() => scrollTo('contact')}
+              className="hidden lg:block text-xs font-bold tracking-widest uppercase text-[#0B0D0C] hover:text-[#50BF8E] transition-colors py-2 px-1"
+              style={{ fontFamily: 'var(--font-encode-sans)' }}
             >
-              <Sparkles className="w-3 h-3 text-[#D4F88D]" />
-              Index ({projectsCount < 10 ? `0${projectsCount}` : projectsCount})
+              Contact Me
             </button>
 
+            {/* Showreel CTA */}
             <button
               onClick={onOpenShowreel}
-              data-cursor="WATCH"
-              className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#141716] text-[#D4F88D] hover:bg-black hover:scale-105 active:scale-95 text-xs font-black tracking-wider uppercase shadow-md transition-all"
+              className="hidden sm:flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#0B0D0C] hover:bg-[#1A1D1B] text-[#FFFAB3] text-xs font-bold tracking-widest uppercase transition-all duration-200 shadow-md hover:shadow-black/20 hover:scale-105 active:scale-95"
             >
-              <Play className="w-3.5 h-3.5 fill-[#D4F88D]" />
-              <span className="hidden sm:inline">Watch Reel</span>
-              <span className="sm:hidden">Reel</span>
+              <Play className="w-3 h-3 fill-[#FFFAB3]" />
+              Showreel
             </button>
 
-            {/* Mobile Menu Toggle */}
+            {/* Hamburger */}
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="flex items-center gap-2 px-3 py-2 rounded-full border border-black/20 hover:border-black bg-black/5 text-[#0B0D0C] transition-all duration-200"
               aria-label="Toggle Menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              <Menu className="w-4 h-4 text-[#0B0D0C]" />
             </button>
           </div>
         </div>
       </header>
 
-      {/* Mobile Drawer */}
+      {/* ── Full-Screen Menu Overlay ────────────────────────────────────────── */}
       <AnimatePresence>
-        {mobileMenuOpen && (
+        {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-40 bg-[#0E100F] text-white pt-28 px-8 flex flex-col justify-between pb-12 md:hidden"
+            initial={{ opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
+            animate={{ opacity: 1, clipPath: 'inset(0 0 0% 0)' }}
+            exit={{ opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-50 bg-[#FFFAB3] text-[#0B0D0C] flex flex-col"
           >
-            <div className="flex flex-col gap-6 text-2xl font-black uppercase tracking-tight">
-              <button
-                onClick={() => scrollToSection('showcase')}
-                className="text-left py-2 border-b border-white/10 hover:text-[#D4F88D] transition-colors"
+            {/* Menu Header */}
+            <div className="flex items-center justify-between px-6 sm:px-10 py-5 border-b border-black/10">
+              <span
+                className="text-xl font-black text-[#0B0D0C]"
+                style={{ fontFamily: 'var(--font-encode-sans)' }}
               >
-                01 / Videos & Showcase
-              </button>
+                Francis Uyota
+              </span>
               <button
-                onClick={() => scrollToSection('movies')}
-                className="text-left py-2 border-b border-white/10 hover:text-[#D4F88D] transition-colors"
+                onClick={() => setMenuOpen(false)}
+                className="p-2.5 rounded-full bg-black/5 hover:bg-black/10 text-black transition-colors"
               >
-                02 / Feature Films & Docs
-              </button>
-              <button
-                onClick={() => scrollToSection('about')}
-                className="text-left py-2 border-b border-white/10 hover:text-[#D4F88D] transition-colors"
-              >
-                03 / About Cinematographer
-              </button>
-              <button
-                onClick={() => scrollToSection('contact')}
-                className="text-left py-2 border-b border-white/10 hover:text-[#D4F88D] transition-colors"
-              >
-                04 / Contact & Enquiries
-              </button>
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenArchive();
-                }}
-                className="text-left py-2 border-b border-white/10 text-[#D4F88D] flex items-center justify-between"
-              >
-                <span>Full Project Archive</span>
-                <span className="text-sm font-normal text-white/50">{projectsCount} {projectsCount === 1 ? 'Project' : 'Projects'}</span>
+                <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="flex flex-col gap-4">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenShowreel();
-                }}
-                className="w-full py-4 rounded-xl bg-[#D4F88D] text-black font-black uppercase tracking-wider flex items-center justify-center gap-2"
+            {/* Menu Links */}
+            <div className="flex-1 flex flex-col justify-center px-6 sm:px-14 gap-1">
+              {navLinks.map((link, i) => (
+                <motion.div
+                  key={link.label}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 + i * 0.06, duration: 0.4 }}
+                >
+                  {link.scroll ? (
+                    <button
+                      onClick={() => scrollTo(link.scroll)}
+                      className="group w-full text-left py-4 border-b border-black/10 flex items-baseline gap-4 hover:border-[#50BF8E] transition-colors"
+                    >
+                      <span className="text-xs font-mono text-black/40">{`0${i + 1}`}</span>
+                      <span
+                        className="text-4xl sm:text-6xl font-black uppercase text-black/80 group-hover:text-[#50BF8E] transition-colors tracking-tight"
+                        style={{ fontFamily: 'var(--font-encode-sans)' }}
+                      >
+                        {link.label.split('/ ')[1]}
+                      </span>
+                    </button>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      onClick={() => setMenuOpen(false)}
+                      className="group w-full text-left py-4 border-b border-black/10 flex items-baseline gap-4 hover:border-[#50BF8E] transition-colors"
+                    >
+                      <span className="text-xs font-mono text-black/40">{`0${i + 1}`}</span>
+                      <span
+                        className="text-4xl sm:text-6xl font-black uppercase text-black/80 group-hover:text-[#50BF8E] transition-colors tracking-tight"
+                        style={{ fontFamily: 'var(--font-encode-sans)' }}
+                      >
+                        {link.label.split('/ ')[1]}
+                      </span>
+                    </Link>
+                  )}
+                </motion.div>
+              ))}
+
+              {/* Archive Link */}
+              <motion.button
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.38, duration: 0.4 }}
+                onClick={() => { setMenuOpen(false); onOpenArchive(); }}
+                className="group w-full text-left py-4 border-b border-black/10 flex items-baseline justify-between hover:border-[#50BF8E] transition-colors"
               >
-                <Play className="w-5 h-5 fill-black" />
-                Play Full Showreel (2026)
+                <div className="flex items-baseline gap-4">
+                  <span className="text-xs font-mono text-black/40">05</span>
+                  <span
+                    className="text-4xl sm:text-6xl font-black uppercase text-[#0B0D0C] group-hover:text-[#50BF8E] transition-colors tracking-tight"
+                    style={{ fontFamily: 'var(--font-encode-sans)' }}
+                  >
+                    Archive
+                  </span>
+                </div>
+                <span className="text-sm font-mono text-black/40 self-center">
+                  {projectsCount} Works
+                </span>
+              </motion.button>
+            </div>
+
+            {/* Menu Footer */}
+            <div className="px-6 sm:px-14 pb-8 pt-6 border-t border-black/10 flex items-center justify-between">
+              <button
+                onClick={() => { setMenuOpen(false); onOpenShowreel(); }}
+                className="flex items-center gap-2 px-6 py-3 rounded-full bg-[#50BF8E] hover:bg-[#3DA376] text-black font-bold text-sm uppercase tracking-widest transition-all shadow-md active:scale-95"
+              >
+                <Play className="w-4 h-4 fill-black" />
+                Watch Showreel
               </button>
-              <div className="flex justify-between text-xs text-white/50 pt-4">
-                <span>Lagos / London / Worldwide</span>
-                <span>hello@uyota.film</span>
+              <div className="flex flex-col text-right text-xs text-black/50 font-medium">
+                <span>Lagos / Ibadan</span>
+                <span>Worldwide</span>
               </div>
             </div>
           </motion.div>

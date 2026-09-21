@@ -83,9 +83,9 @@ export default function CustomCursor() {
         animate={{
           width: cursorVariant === 'video' ? 84 : cursorVariant === 'hover' && cursorText ? 76 : cursorVariant === 'hover' ? 32 : 12,
           height: cursorVariant === 'video' ? 84 : cursorVariant === 'hover' && cursorText ? 76 : cursorVariant === 'hover' ? 32 : 12,
-          backgroundColor: cursorVariant === 'video' ? '#D4F88D' : cursorVariant === 'hover' ? 'rgba(255,255,255,0.9)' : '#141716',
-          color: cursorVariant === 'video' ? '#0B0D0C' : '#0B0D0C',
-          mixBlendMode: cursorVariant === 'default' ? 'normal' : 'normal',
+          backgroundColor: cursorVariant === 'video' ? '#D4F88D' : cursorVariant === 'hover' ? '#50BF8E' : '#0B0D0C',
+          color: '#0B0D0C',
+          border: cursorVariant === 'default' ? '1.5px solid rgba(255,250,179,0.3)' : '1.5px solid #0B0D0C',
           boxShadow: cursorVariant === 'video' ? '0 10px 30px rgba(0,0,0,0.3)' : 'none',
         }}
         transition={{ type: 'spring', damping: 25, stiffness: 300 }}

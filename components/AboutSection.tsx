@@ -1,65 +1,60 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Play } from 'lucide-react';
+import { Camera, Sparkles } from 'lucide-react';
 
 export default function AboutSection() {
   return (
-    <section id="about" className="w-full bg-[#F6F7F3] text-[#141716] py-20 sm:py-28 px-4 sm:px-8 lg:px-12 relative">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          {/* Left Title Column matching wireframe */}
-          <div className="lg:col-span-5">
-            <h2 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-[#141716] tracking-tight leading-none font-display-title">
-              About me
-            </h2>
-          </div>
+    <section id="about" className="w-full bg-[#0B0D0C] text-[#FFFAB3] py-16 sm:py-24 px-5 sm:px-8 lg:px-12 relative overflow-hidden select-none">
+      {/* Subtle film grain */}
+      <div className="film-grain absolute inset-0 opacity-20 pointer-events-none" />
 
-          {/* Right High-Contrast Editorial Bio Column matching wireframe */}
-          <div className="lg:col-span-7 flex flex-col gap-6 text-lg sm:text-xl text-[#141716]/90">
-            <p className="font-light leading-relaxed font-editorial-body">
-              <strong className="font-black text-[#141716]">Uyota</strong> is a Director of Photography and Colorist sculpting textured, emotionally resonant imagery. Combining mastery of large-format digital cinema sensors with vintage anamorphic glass, Uyota crafts visual languages that elevate cinematic storytelling.
-            </p>
-
-            <p className="font-light leading-relaxed font-editorial-body text-[#141716]/80">
-              From commercial films and narrative cinema to intimate feature documentaries for global streaming networks, the work is anchored in deliberate lighting, organic shadow falloff, and evocative color science.
-            </p>
-
-            <p className="font-light leading-relaxed font-editorial-body text-[#141716]/80">
-              Available globally for narrative features, commercial campaigns, and documentary productions.
-            </p>
-          </div>
-        </div>
-
-        {/* Cinematographer Video Frame Section (Empty Frame Placeholder) */}
-        <div className="mt-16 sm:mt-20">
-          <div
-            className="group relative w-full aspect-video sm:aspect-[2.35/1] bg-[#0E100F] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-4 border-black/10 flex items-center justify-center cursor-pointer"
-            data-cursor="PLAY"
+      <div className="max-w-4xl mx-auto flex flex-col items-start text-left relative z-10">
+        {/* Label */}
+        <motion.div
+          initial={{ opacity: 0, x: -16 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="flex items-center gap-2 mb-4"
+        >
+          <span className="w-6 h-0.5 bg-[#50BF8E]" />
+          <span
+            className="text-xs sm:text-sm font-black tracking-[0.2em] uppercase text-[#50BF8E]"
+            style={{ fontFamily: 'var(--font-encode-sans)' }}
           >
-            {/* Ambient Background Glow / Empty Frame Canvas */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#141716] via-[#1B201D] to-[#0E100F] opacity-90" />
+            Filmmaker &amp; Visionary
+          </span>
+          <Camera className="w-4 h-4 text-[#50BF8E]" />
+        </motion.div>
 
-            {/* Subtle Crosshairs / Framing Grid Overlay */}
-            <div className="absolute inset-8 sm:inset-12 border border-white/10 rounded-xl pointer-events-none flex items-center justify-center">
-              <div className="w-4 h-4 border-t border-l border-[#D4F88D]/40 absolute top-0 left-0" />
-              <div className="w-4 h-4 border-t border-r border-[#D4F88D]/40 absolute top-0 right-0" />
-              <div className="w-4 h-4 border-b border-l border-[#D4F88D]/40 absolute bottom-0 left-0" />
-              <div className="w-4 h-4 border-b border-r border-[#D4F88D]/40 absolute bottom-0 right-0" />
-            </div>
+        {/* Editorial Statement Copy matching wireframe */}
+        <motion.p
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, type: 'spring', stiffness: 100, damping: 14 }}
+          className="text-2xl sm:text-4xl md:text-5xl font-black text-white leading-[1.2] sm:leading-[1.18] tracking-tight mb-4"
+          style={{ fontFamily: 'var(--font-encode-sans)' }}
+        >
+          Francis Uyota moves between the camera lens and the cutting room with an editor&apos;s precision and a painter&apos;s sense of mood. Working across film, creative direction, and photography, his practice interrogates memory, sound, and visual identity.
+        </motion.p>
 
-            {/* Center Play Button in Empty Frame */}
-            <div className="relative z-10 flex flex-col items-center gap-4 text-center">
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#D4F88D] text-black flex items-center justify-center shadow-2xl group-hover:scale-105 transition-transform"
-              >
-                <Play className="w-7 h-7 sm:w-8 sm:h-8 fill-black ml-1" />
-              </motion.div>
-            </div>
-          </div>
-        </div>
+        {/* Cheeky badge */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3, duration: 0.4 }}
+          className="mt-6 flex flex-wrap items-center gap-3"
+        >
+          <span className="px-3.5 py-1.5 rounded-full bg-[#50BF8E]/15 border border-[#50BF8E]/40 text-[#50BF8E] text-xs font-bold uppercase tracking-wider">
+            ✦ DaVinci Resolve · ARRI · 16mm
+          </span>
+          <span className="px-3.5 py-1.5 rounded-full bg-[#DFB143]/15 border border-[#DFB143]/40 text-[#DFB143] text-xs font-bold uppercase tracking-wider">
+            ✦ Whitechapel Gallery Alum
+          </span>
+        </motion.div>
       </div>
     </section>
   );
