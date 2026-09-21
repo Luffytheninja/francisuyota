@@ -107,10 +107,10 @@ export default function Navbar({ onOpenShowreel, onOpenArchive, projectsCount = 
               Showreel
             </button>
 
-            {/* Hamburger */}
+            {/* Hamburger (Mobile Only) */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="flex items-center gap-2 px-3 py-2 rounded-full border border-black/20 hover:border-black bg-black/5 text-[#0B0D0C] transition-all duration-200"
+              className="flex md:hidden items-center gap-2 px-3 py-2 rounded-full border border-black/20 hover:border-black bg-black/5 text-[#0B0D0C] transition-all duration-200"
               aria-label="Toggle Menu"
             >
               <Menu className="w-4 h-4 text-[#0B0D0C]" />
