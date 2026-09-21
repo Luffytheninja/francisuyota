@@ -12,10 +12,10 @@ interface NavbarProps {
 }
 
 const navLinks = [
-  { label: '01 / Uyota Verse', href: '#hero', scroll: 'hero' },
-  { label: '02 / Works', href: '#works', scroll: 'works' },
+  { label: '01 / Uyota Verse', href: '/#hero', scroll: 'hero' },
+  { label: '02 / Works', href: '/#works', scroll: 'works' },
   { label: '03 / Services', href: '/services', scroll: null },
-  { label: '04 / Contact', href: '#contact', scroll: 'contact' },
+  { label: '04 / Contact', href: '/contact', scroll: null },
 ];
 
 export default function Navbar({ onOpenShowreel, onOpenArchive, projectsCount = 0 }: NavbarProps) {
@@ -31,7 +31,12 @@ export default function Navbar({ onOpenShowreel, onOpenArchive, projectsCount = 
   const scrollTo = (id: string | null) => {
     setMenuOpen(false);
     if (!id) return;
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.location.href = `/#${id}`;
+    }
   };
 
   return (
@@ -46,9 +51,13 @@ export default function Navbar({ onOpenShowreel, onOpenArchive, projectsCount = 
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-8 flex items-center justify-between">
           {/* Brand */}
-          <a
-            href="#hero"
-            onClick={(e) => { e.preventDefault(); scrollTo('hero'); }}
+          <Link
+            href="/#hero"
+            onClick={() => {
+              if (document.getElementById('hero')) {
+                scrollTo('hero');
+              }
+            }}
             className="group flex flex-col leading-none cursor-pointer"
           >
             <span
@@ -60,7 +69,7 @@ export default function Navbar({ onOpenShowreel, onOpenArchive, projectsCount = 
             <span className="text-[10px] font-semibold text-[#0B0D0C]/60 tracking-widest uppercase">
               Filmmaker · Ibadan
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Floating Nav Pill matching wireframe */}
           <nav className="hidden md:flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#50BF8E] border border-black/15 shadow-md shadow-[#50BF8E]/20">
@@ -89,14 +98,14 @@ export default function Navbar({ onOpenShowreel, onOpenArchive, projectsCount = 
 
           {/* Right Actions */}
           <div className="flex items-center gap-3">
-            {/* Contact Me CTA from wireframe */}
-            <button
-              onClick={() => scrollTo('contact')}
+            {/* Contact Me CTA */}
+            <Link
+              href="/contact"
               className="hidden lg:block text-xs font-bold tracking-widest uppercase text-[#0B0D0C] hover:text-[#50BF8E] transition-colors py-2 px-1"
               style={{ fontFamily: 'var(--font-encode-sans)' }}
             >
               Contact Me
-            </button>
+            </Link>
 
             {/* Showreel CTA */}
             <button

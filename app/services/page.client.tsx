@@ -26,7 +26,7 @@ const GEAR = [
 
 export default function ServicesClient({ services }: ServicesClientProps) {
   const scrollToContact = () => {
-    window.location.href = '/#contact';
+    window.location.href = '/contact';
   };
 
   return (
