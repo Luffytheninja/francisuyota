@@ -225,7 +225,7 @@ export default function ShowcaseSection({ projects, onSelectProject, onOpenArchi
           <div>
             <p className="text-[11px] font-black tracking-[0.2em] uppercase text-[#50BF8E] mb-2 flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 fill-[#50BF8E]" />
-              Cinematography Studio · Ibadan
+              Cinematography Studio · Nigeria — Worldwide
             </p>
             <h3
               className="text-2xl sm:text-3xl font-black text-white tracking-tight"

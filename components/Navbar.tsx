@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, X, Menu } from 'lucide-react';
+import { X, Menu } from 'lucide-react';
 import Link from 'next/link';
 
 interface NavbarProps {
@@ -12,7 +12,7 @@ interface NavbarProps {
 }
 
 const navLinks = [
-  { label: '01 / Uyota Verse', href: '/#hero', scroll: 'hero' },
+  { label: '01 / Uyota Studio', href: '/#hero', scroll: 'hero' },
   { label: '02 / Works', href: '/#works', scroll: 'works' },
   { label: '03 / Services', href: '/services', scroll: null },
   { label: '04 / Contact', href: '/contact', scroll: null },
@@ -35,6 +35,7 @@ export default function Navbar({ onOpenShowreel, onOpenArchive, projectsCount = 
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     } else {
+      // Not on the right page, navigate there
       window.location.href = `/#${id}`;
     }
   };
@@ -49,7 +50,7 @@ export default function Navbar({ onOpenShowreel, onOpenArchive, projectsCount = 
             : 'py-5 bg-transparent'
         }`}
       >
-        <div className="max-w-6xl mx-auto px-4 sm:px-8 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 sm:px-8 relative flex items-center justify-between">
           {/* Brand */}
           <Link
             href="/#hero"
@@ -67,33 +68,29 @@ export default function Navbar({ onOpenShowreel, onOpenArchive, projectsCount = 
               Francis Uyota
             </span>
             <span className="text-[10px] font-semibold text-[#0B0D0C]/60 tracking-widest uppercase">
-              Filmmaker · Ibadan
+              Filmmaker · Nigeria
             </span>
           </Link>
 
-          {/* Desktop Floating Nav Pill matching wireframe */}
-          <nav className="hidden md:flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#50BF8E] border border-black/15 shadow-md shadow-[#50BF8E]/20">
-            {navLinks.map((link) =>
-              link.scroll ? (
-                <button
-                  key={link.label}
-                  onClick={() => scrollTo(link.scroll)}
-                  className="px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-[#0B0D0C] hover:bg-black/10 transition-colors"
-                  style={{ fontFamily: 'var(--font-encode-sans)' }}
-                >
-                  {link.label.split('/ ')[1]}
-                </button>
-              ) : (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className="px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-[#0B0D0C] hover:bg-black/10 transition-colors"
-                  style={{ fontFamily: 'var(--font-encode-sans)' }}
-                >
-                  {link.label.split('/ ')[1]}
-                </Link>
-              )
-            )}
+          {/* Desktop Floating Nav Pill — absolutely centered */}
+          <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-1.5 px-4 py-2 rounded-full bg-[#50BF8E] border border-black/15 shadow-md shadow-[#50BF8E]/20">
+            {navLinks.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                onClick={link.scroll ? (e) => {
+                  const el = document.getElementById(link.scroll!);
+                  if (el) {
+                    e.preventDefault();
+                    el.scrollIntoView({ behavior: 'smooth' });
+                  }
+                } : undefined}
+                className="px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-[#0B0D0C] hover:bg-black/10 transition-colors"
+                style={{ fontFamily: 'var(--font-encode-sans)' }}
+              >
+                {link.label.split('/ ')[1]}
+              </Link>
+            ))}
           </nav>
 
           {/* Right Actions */}
@@ -106,15 +103,6 @@ export default function Navbar({ onOpenShowreel, onOpenArchive, projectsCount = 
             >
               Contact Me
             </Link>
-
-            {/* Showreel CTA */}
-            <button
-              onClick={onOpenShowreel}
-              className="hidden sm:flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#0B0D0C] hover:bg-[#1A1D1B] text-[#FFFAB3] text-xs font-bold tracking-widest uppercase transition-all duration-200 shadow-md hover:shadow-black/20 hover:scale-105 active:scale-95"
-            >
-              <Play className="w-3 h-3 fill-[#FFFAB3]" />
-              Showreel
-            </button>
 
             {/* Hamburger (Mobile Only) */}
             <button
@@ -219,15 +207,8 @@ export default function Navbar({ onOpenShowreel, onOpenArchive, projectsCount = 
 
             {/* Menu Footer */}
             <div className="px-6 sm:px-14 pb-8 pt-6 border-t border-black/10 flex items-center justify-between">
-              <button
-                onClick={() => { setMenuOpen(false); onOpenShowreel(); }}
-                className="flex items-center gap-2 px-6 py-3 rounded-full bg-[#50BF8E] hover:bg-[#3DA376] text-black font-bold text-sm uppercase tracking-widest transition-all shadow-md active:scale-95"
-              >
-                <Play className="w-4 h-4 fill-black" />
-                Watch Showreel
-              </button>
-              <div className="flex flex-col text-right text-xs text-black/50 font-medium">
-                <span>Lagos / Ibadan</span>
+              <div className="flex flex-col text-xs text-black/50 font-medium">
+                <span>Nigeria</span>
                 <span>Worldwide</span>
               </div>
             </div>

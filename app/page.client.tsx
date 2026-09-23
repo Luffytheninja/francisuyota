@@ -11,11 +11,14 @@ import ContactSection from '@/components/ContactSection';
 import ProjectModal from '@/components/ProjectModal';
 import ShowreelModal from '@/components/ShowreelModal';
 import ArchiveDrawer from '@/components/ArchiveDrawer';
+import { StackCard } from '@/components/StackedSections';
 import type { Project } from '@/lib/types';
 
 interface PageClientProps {
   projects: Project[];
 }
+
+const TOTAL_SECTIONS = 4;
 
 export default function PageClient({ projects }: PageClientProps) {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -33,33 +36,43 @@ export default function PageClient({ projects }: PageClientProps) {
         {/* Desktop contextual cursor */}
         <CustomCursor />
 
-        {/* Global navigation */}
+        {/* Global navigation — sits above stack */}
         <Navbar
           projectsCount={projects.length}
           onOpenShowreel={() => setIsShowreelOpen(true)}
           onOpenArchive={() => setIsArchiveOpen(true)}
         />
 
-        {/* 1 – Hero: Center-balanced composition + responsive dual-mode video viewport */}
-        <HeroSection
-          projects={projects}
-          heroProject={heroProject}
-          onOpenShowreel={() => setIsShowreelOpen(true)}
-          onSelectProject={(p) => setSelectedProject(p)}
-        />
+        {/* ── Stacked Card Sections ── */}
 
-        {/* 2 – Editorial Statement: Wireframe black statement section */}
-        <AboutSection />
+        {/* 1 – Hero */}
+        <StackCard index={0} total={TOTAL_SECTIONS}>
+          <HeroSection
+            projects={projects}
+            heroProject={heroProject}
+            onOpenShowreel={() => setIsShowreelOpen(true)}
+            onSelectProject={(p) => setSelectedProject(p)}
+          />
+        </StackCard>
 
-        {/* 3 – Works: Selected project grid showing only uploaded works with category brand strokes */}
-        <ShowcaseSection
-          projects={projects}
-          onSelectProject={(p) => setSelectedProject(p)}
-          onOpenArchive={() => setIsArchiveOpen(true)}
-        />
+        {/* 2 – About / Editorial Statement */}
+        <StackCard index={1} total={TOTAL_SECTIONS}>
+          <AboutSection />
+        </StackCard>
 
-        {/* 4 – Contact: Wireframe sky-blue contact section with giant typography */}
-        <ContactSection />
+        {/* 3 – Works */}
+        <StackCard index={2} total={TOTAL_SECTIONS}>
+          <ShowcaseSection
+            projects={projects}
+            onSelectProject={(p) => setSelectedProject(p)}
+            onOpenArchive={() => setIsArchiveOpen(true)}
+          />
+        </StackCard>
+
+        {/* 4 – Contact (last card — no scale-down) */}
+        <StackCard index={3} total={TOTAL_SECTIONS}>
+          <ContactSection />
+        </StackCard>
 
         {/* ── Modals & Drawers ── */}
         <ProjectModal

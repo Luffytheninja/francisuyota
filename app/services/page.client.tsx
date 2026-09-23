@@ -59,7 +59,7 @@ export default function ServicesClient({ services }: ServicesClientProps) {
               <span className="text-[#50BF8E]">Studio</span>
             </h1>
             <p className="text-base sm:text-lg text-[#0B0D0C]/75 max-w-xl leading-relaxed font-medium">
-              A full-service cinematography studio based in Ibadan, Nigeria. Freelance shoots available worldwide — from Lagos to London and beyond.
+              A full-service cinematography studio based in Nigeria. Freelance shoots available worldwide — from Lagos to London and beyond.
             </p>
           </motion.div>
 
@@ -71,7 +71,7 @@ export default function ServicesClient({ services }: ServicesClientProps) {
             className="flex flex-wrap gap-3 mt-8"
           >
             {[
-              { icon: MapPin, label: 'Ibadan Studio, Nigeria', color: '#0B0D0C' },
+              { icon: MapPin, label: 'Nigeria Studio', color: '#0B0D0C' },
               { icon: Globe, label: 'Worldwide Freelance', color: '#0B0D0C' },
               { icon: Film, label: 'Film · MV · Docu · Commercial', color: '#0B0D0C' },
             ].map(({ icon: Icon, label, color }) => (

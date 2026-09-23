@@ -129,3 +129,25 @@ html {
     linear-gradient(90deg, rgba(80,191,142,0.07) 1px, transparent 1px);
   background-size: 48px 48px;
 }
+/* ─── Stacked Card Sections ──────────────────────────────────────────────── */
+/*
+ * Each homepage section sticks to the top and scales down slightly as the
+ * next section scrolls over it, creating a "deck of cards" feel.
+ */
+.stack-card-sticky {
+  position: sticky;
+  top: 0;
+  will-change: transform;
+}
+
+/* Rounded top corners so sections look like cards being laid over each other */
+.stack-card-sticky > * {
+  border-radius: 1.5rem 1.5rem 0 0;
+  box-shadow: 0 -4px 40px rgba(11, 13, 12, 0.12);
+}
+
+/* First section (Hero) has no rounded top — it's flush */
+.stack-card-sticky:first-of-type > * {
+  border-radius: 0;
+  box-shadow: none;
+}

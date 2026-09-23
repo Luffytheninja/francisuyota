@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Play, ArrowDown, Sparkles } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Project } from '@/lib/types';
 import { urlFor } from '@/lib/sanity';
 import { trackShowreelOpen, trackProjectView } from '@/lib/analytics';
@@ -64,26 +65,34 @@ export default function HeroSection({ projects, heroProject, onOpenShowreel, onS
       <div className="film-grain absolute inset-0 z-0 pointer-events-none opacity-20" />
 
       {/* Decorative cheeky Nigerian stickers/badges floating in corners on large screens */}
-      <motion.div
+      {/* YouTube tag — links to channel */}
+      <motion.a
+        href="https://www.youtube.com/@francisuyota"
+        target="_blank"
+        rel="noreferrer"
         initial={{ opacity: 0, scale: 0.8, rotate: -12 }}
         animate={{ opacity: 1, scale: 1, rotate: -8 }}
         transition={{ delay: 0.8, type: 'spring', stiffness: 180, damping: 12 }}
         whileHover={{ rotate: 0, scale: 1.1 }}
-        className="hidden xl:flex absolute top-36 left-8 z-10 items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#50BF8E] text-[#0B0D0C] border-2 border-[#0B0D0C] text-xs font-black uppercase tracking-wider shadow-[3px_3px_0px_#0B0D0C] cursor-default"
+        className="hidden xl:flex absolute top-36 left-8 z-10 items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#50BF8E] text-[#0B0D0C] border-2 border-[#0B0D0C] text-xs font-black uppercase tracking-wider shadow-[3px_3px_0px_#0B0D0C] cursor-pointer"
       >
         <Sparkles className="w-3.5 h-3.5 fill-[#0B0D0C]" />
-        Ibadan To The World
-      </motion.div>
+        YouTube
+      </motion.a>
 
-      <motion.div
+      {/* Instagram tag — links to profile */}
+      <motion.a
+        href="https://www.instagram.com/francisuyota"
+        target="_blank"
+        rel="noreferrer"
         initial={{ opacity: 0, scale: 0.8, rotate: 12 }}
         animate={{ opacity: 1, scale: 1, rotate: 6 }}
         transition={{ delay: 0.9, type: 'spring', stiffness: 180, damping: 12 }}
         whileHover={{ rotate: 0, scale: 1.1 }}
-        className="hidden xl:flex absolute top-40 right-8 z-10 items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#DFB143] text-[#0B0D0C] border-2 border-[#0B0D0C] text-xs font-black uppercase tracking-wider shadow-[3px_3px_0px_#0B0D0C] cursor-default"
+        className="hidden xl:flex absolute top-40 right-8 z-10 items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#DFB143] text-[#0B0D0C] border-2 border-[#0B0D0C] text-xs font-black uppercase tracking-wider shadow-[3px_3px_0px_#0B0D0C] cursor-pointer"
       >
-        ✦ 100% African Grit
-      </motion.div>
+        ✦ Instagram
+      </motion.a>
 
       {/* ── Center Balanced Hero Header Content ── */}
       <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center justify-center text-center px-2 sm:px-4">
@@ -99,7 +108,7 @@ export default function HeroSection({ projects, heroProject, onOpenShowreel, onS
             style={getFontStyle(FONTS[fontIndex])}
           >
             <span className="block sm:inline sm:mr-4">UYOTA</span>
-            <span className="block sm:inline">VERSE</span>
+            <span className="block sm:inline">STUDIO</span>
           </h1>
         </motion.div>
 
@@ -113,27 +122,17 @@ export default function HeroSection({ projects, heroProject, onOpenShowreel, onS
         >
           Filmmaker · Creative Director · Photographer<br />
           <span className="text-xs sm:text-sm font-normal text-[#0B0D0C]/60 tracking-wider">
-            Ibadan, Nigeria — Worldwide
+            Nigeria — Worldwide
           </span>
         </motion.p>
 
-        {/* Center Balanced Action Buttons */}
+        {/* View Works Button */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.35 }}
-          className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-8 sm:mb-12 mx-auto"
+          className="flex items-center justify-center mb-8 sm:mb-12 mx-auto"
         >
-          <motion.button
-            whileHover={{ scale: 1.06, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => { trackShowreelOpen(); onOpenShowreel(); }}
-            className="flex items-center gap-2.5 px-6 sm:px-8 py-3.5 rounded-full bg-[#0B0D0C] hover:bg-[#1A1D1B] text-[#FFFAB3] font-bold text-xs sm:text-sm uppercase tracking-widest transition-colors shadow-[4px_4px_0px_#50BF8E] active:shadow-[1px_1px_0px_#50BF8E]"
-          >
-            <Play className="w-4 h-4 fill-[#FFFAB3]" />
-            Watch Showreel
-          </motion.button>
-
           <motion.button
             whileHover={{ scale: 1.06, y: -2 }}
             whileTap={{ scale: 0.95 }}
@@ -224,21 +223,6 @@ export default function HeroSection({ projects, heroProject, onOpenShowreel, onS
         </motion.div>
       )}
 
-      {/* Mobile Wireframe Cue: "-See Reels" link below viewport */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="md:hidden mt-4 text-center"
-      >
-        <button
-          onClick={() => { trackShowreelOpen(); onOpenShowreel(); }}
-          className="text-sm font-black uppercase tracking-widest text-[#0B0D0C] underline decoration-[#0B0D0C] decoration-2 underline-offset-4 hover:text-[#50BF8E] transition-colors"
-          style={{ fontFamily: 'var(--font-encode-sans)' }}
-        >
-          - See Reels
-        </button>
-      </motion.div>
     </section>
   );
 }

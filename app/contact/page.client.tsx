@@ -570,7 +570,7 @@ export default function ContactPageClient() {
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-bold text-[#0B0D0C]/70">
           <div className="flex items-center gap-4">
             <Link href="/" className="hover:text-[#50BF8E] transition-colors">
-              ← Back to Uyota Verse
+              ← Back to Uyota Studio
             </Link>
             <Link href="/services" className="hover:text-[#50BF8E] transition-colors">
               Services &amp; Studio

@@ -69,7 +69,7 @@ export default function Loader({ onComplete }: LoaderProps) {
             className="absolute w-32 h-32 rounded-full bg-[#FFFAB3] pointer-events-none"
           />
 
-          {/* UYOTA VERSE Text with dramatic zoom */}
+          {/* UYOTA STUDIO Text with dramatic zoom */}
           <motion.div
             initial={{ scale: 0.9, opacity: 0, y: 15 }}
             animate={
@@ -102,7 +102,7 @@ export default function Loader({ onComplete }: LoaderProps) {
               className="text-6xl sm:text-8xl md:text-9xl font-black uppercase text-[#FFFAB3] leading-[0.88] tracking-tight font-display-title drop-shadow-sm"
               style={{ fontFamily: 'var(--font-encode-sans)' }}
             >
-              UYOTA<br />VERSE
+              UYOTA<br />STUDIO
             </h1>
           </motion.div>
         </motion.div>

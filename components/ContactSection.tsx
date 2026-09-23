@@ -85,7 +85,7 @@ export default function ContactSection() {
             className="sm:text-right text-sm font-semibold text-[#0B0D0C]/80 space-y-1"
           >
             <p className="text-base font-black text-[#0B0D0C]">hello@uyota.film</p>
-            <p>Ibadan Studio · Available Worldwide</p>
+            <p>Nigeria Studio · Available Worldwide</p>
           </motion.div>
         </div>
 
@@ -243,7 +243,7 @@ export default function ContactSection() {
         {/* Footer */}
         <div className="mt-16 pt-8 border-t-2 border-[#0B0D0C]/15 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-bold text-[#0B0D0C]/60">
           <span>© {new Date().getFullYear()} Francis Onabanjo · Francis Uyota. All rights reserved.</span>
-          <span>Ibadan · Lagos · Worldwide</span>
+          <span>Nigeria — Worldwide</span>
         </div>
       </div>
     </section>
