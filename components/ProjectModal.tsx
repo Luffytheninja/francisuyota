@@ -90,14 +90,32 @@ export default function ProjectModal({ project, onClose, onSelectProject, projec
                 className="group relative w-full h-full cursor-pointer"
                 onClick={() => setIsPlaying(true)}
               >
-                <Image
-                  src={thumbnailUrl}
-                  alt={project.title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 768px) 100vw, 1024px"
-                  priority
-                />
+                {project.poster ? (
+                  <Image
+                    src={urlFor(project.poster).width(1280).height(720).url()}
+                    alt={project.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 100vw, 1024px"
+                    priority
+                  />
+                ) : project.videoUrl ? (
+                  <video
+                    src={project.videoUrl}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    muted
+                    preload="metadata"
+                  />
+                ) : project.youtubeId ? (
+                  <Image
+                    src={`https://img.youtube.com/vi/${project.youtubeId}/maxresdefault.jpg`}
+                    alt={project.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 100vw, 1024px"
+                    priority
+                  />
+                ) : null}
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/25 transition-colors flex items-center justify-center">
                   <motion.div
                     whileHover={{ scale: 1.1 }}
@@ -110,7 +128,15 @@ export default function ProjectModal({ project, onClose, onSelectProject, projec
                   </motion.div>
                 </div>
               </div>
-            ) : (
+            ) : project.videoUrl ? (
+              <video
+                src={project.videoUrl}
+                controls
+                autoPlay
+                playsInline
+                className="w-full h-full object-contain bg-black"
+              />
+            ) : project.youtubeId ? (
               <iframe
                 src={`https://www.youtube-nocookie.com/embed/${project.youtubeId}?autoplay=1&modestbranding=1&rel=0&color=white`}
                 title={project.title}
@@ -118,7 +144,7 @@ export default function ProjectModal({ project, onClose, onSelectProject, projec
                 allowFullScreen
                 className="w-full h-full border-0"
               />
-            )}
+            ) : null}
           </div>
 
           {/* Content */}

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Camera, Sparkles } from 'lucide-react';
+import { Film, Sparkles } from 'lucide-react';
 
 export default function AboutSection() {
   return (
@@ -25,7 +25,7 @@ export default function AboutSection() {
           >
             Filmmaker &amp; Visionary
           </span>
-          <Camera className="w-4 h-4 text-[#50BF8E]" />
+          <Film className="w-4 h-4 text-[#50BF8E]" />
         </motion.div>
 
         {/* Editorial Statement Copy matching wireframe */}
@@ -37,10 +37,10 @@ export default function AboutSection() {
           className="text-2xl sm:text-4xl md:text-5xl font-black text-white leading-[1.2] sm:leading-[1.18] tracking-tight mb-4"
           style={{ fontFamily: 'var(--font-encode-sans)' }}
         >
-          Francis Uyota moves between the camera lens and the cutting room with an editor&apos;s precision and a painter&apos;s sense of mood. Working across film, creative direction, and photography, his practice interrogates memory, sound, and visual identity.
+          Francis Uyota moves between the camera lens and the cutting room with an editor&apos;s precision and a painter&apos;s sense of mood. Working across narrative film, commercial fashion, and music visuals, his practice interrogates memory, sound, and visual identity.
         </motion.p>
 
-        {/* Cheeky badge */}
+        {/* Badges */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -49,7 +49,7 @@ export default function AboutSection() {
           className="mt-6 flex flex-wrap items-center gap-3"
         >
           <span className="px-3.5 py-1.5 rounded-full bg-[#50BF8E]/15 border border-[#50BF8E]/40 text-[#50BF8E] text-xs font-bold uppercase tracking-wider">
-            ✦ DaVinci Resolve · ARRI · 16mm
+            ✦ Narrative Cinema &amp; Visuals
           </span>
           <span className="px-3.5 py-1.5 rounded-full bg-[#DFB143]/15 border border-[#DFB143]/40 text-[#DFB143] text-xs font-bold uppercase tracking-wider">
             ✦ Whitechapel Gallery Alum

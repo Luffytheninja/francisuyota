@@ -25,13 +25,13 @@ import { trackContactSubmit } from '@/lib/analytics';
 import type { ContactFormPayload } from '@/lib/types';
 
 const PROJECT_TYPES = [
-  'Narrative Feature / Short',
+  'Narrative Feature / Short Film',
   'Music Video',
-  'Documentary',
   'Commercial / Brand Campaign',
+  'Fashion & Capsule Campaign',
+  'Documentary & Cultural Document',
   'Creative Direction',
-  'Fashion / Editorial Photography',
-  'Color Grading / Post-Production',
+  'Color Grading & Post-Production',
   'Other Inquiries',
 ];
 
@@ -86,8 +86,8 @@ const WORKFLOW_STEPS = [
   {
     num: '03',
     title: 'Production & Shoot',
-    desc: 'Principal photography on ARRI / RED / 16mm systems with specialized cine optics.',
-    icon: Camera,
+    desc: 'Principal cinematography with tailored camera movements, intentional lighting, and directing.',
+    icon: Film,
   },
   {
     num: '04',
@@ -190,7 +190,7 @@ export default function ContactPageClient() {
                 <span>Open for {new Date().getFullYear()} Commissions</span>
               </div>
               <p className="text-xs sm:text-sm font-semibold text-[#0B0D0C]/70">
-                Ibadan Studio · Available Worldwide
+                Directing &amp; Cinematography · Nigeria — Worldwide
               </p>
             </div>
           </motion.div>
@@ -253,10 +253,10 @@ export default function ContactPageClient() {
                     className="text-base font-black text-[#0B0D0C] uppercase tracking-wide"
                     style={{ fontFamily: 'var(--font-encode-sans)' }}
                   >
-                    Studio Location
+                    Directing &amp; Production
                   </h3>
                   <p className="text-xs text-[#0B0D0C]/70 mt-0.5">
-                    Ibadan, Oyo State, Nigeria
+                    Nigeria — Worldwide Commission
                   </p>
                   <p className="text-xs font-semibold text-[#0B0D0C] mt-1">
                     Shoots available across Lagos, Abuja, London, and international locations.

@@ -125,13 +125,30 @@ export default function ArchiveDrawer({ isOpen, onClose, onSelectProject, projec
                       0{idx + 1}
                     </span>
                     <div className="w-12 h-12 rounded-lg bg-black overflow-hidden relative shrink-0">
-                      <Image
-                        src={getThumbnail(p)}
-                        alt={p.title}
-                        fill
-                        className="object-cover"
-                        sizes="48px"
-                      />
+                      {p.poster ? (
+                        <Image
+                          src={urlFor(p.poster).width(96).height(96).url()}
+                          alt={p.title}
+                          fill
+                          className="object-cover"
+                          sizes="48px"
+                        />
+                      ) : p.videoUrl ? (
+                        <video
+                          src={p.videoUrl}
+                          className="object-cover w-full h-full"
+                          muted
+                          preload="metadata"
+                        />
+                      ) : p.youtubeId ? (
+                        <Image
+                          src={`https://img.youtube.com/vi/${p.youtubeId}/hqdefault.jpg`}
+                          alt={p.title}
+                          fill
+                          className="object-cover"
+                          sizes="48px"
+                        />
+                      ) : null}
                     </div>
                     <div>
                       <h4 className="text-base font-black text-white group-hover:text-[#D4F88D] transition-colors font-display-title">
@@ -151,7 +168,7 @@ export default function ArchiveDrawer({ isOpen, onClose, onSelectProject, projec
           {/* Bottom Summary */}
           <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-white/50">
             <span>Showing {filteredProjects.length} of {projects.length} cinematic works</span>
-            <span>DaVinci Studio 19 LUTs available</span>
+            <span>Worldwide Commission &amp; Travel</span>
           </div>
         </motion.div>
       </div>

@@ -7,8 +7,8 @@ import { trackContactSubmit } from '@/lib/analytics';
 import type { ContactFormPayload } from '@/lib/types';
 
 const PROJECT_TYPES = [
-  'Narrative Film', 'Music Video', 'Documentary', 'Commercial',
-  'Creative Direction', 'Photography', 'Other',
+  'Narrative Film', 'Music Video', 'Fashion & Commercial Campaign',
+  'Documentary', 'Creative Direction', 'Other',
 ];
 
 const SOCIAL_LINKS = [

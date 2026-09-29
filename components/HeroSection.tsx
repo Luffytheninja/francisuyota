@@ -120,7 +120,7 @@ export default function HeroSection({ projects, heroProject, onOpenShowreel, onS
           className="text-sm sm:text-lg md:text-xl font-medium text-[#0B0D0C]/80 max-w-xl mx-auto mb-6 sm:mb-8 leading-relaxed"
           style={{ fontFamily: 'var(--font-encode-sans)' }}
         >
-          Filmmaker · Creative Director · Photographer<br />
+          Filmmaker &amp; Creative Director<br />
           <span className="text-xs sm:text-sm font-normal text-[#0B0D0C]/60 tracking-wider">
             Nigeria — Worldwide
           </span>
@@ -168,8 +168,17 @@ export default function HeroSection({ projects, heroProject, onOpenShowreel, onS
             data-cursor="WATCH"
             onClick={handleVideoClick}
           >
-            {/* Thumbnail Poster */}
-            {getThumbnail(activeProject) && (
+            {/* Real Video playback or Thumbnail Poster */}
+            {activeProject.videoUrl ? (
+              <video
+                src={activeProject.videoUrl}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+              />
+            ) : getThumbnail(activeProject) ? (
               <Image
                 src={getThumbnail(activeProject)}
                 alt={activeProject.title}
@@ -178,7 +187,7 @@ export default function HeroSection({ projects, heroProject, onOpenShowreel, onS
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 800px"
                 priority
               />
-            )}
+            ) : null}
 
             {/* Cinematic Gradient Overlays */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent pointer-events-none" />

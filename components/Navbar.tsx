@@ -68,7 +68,7 @@ export default function Navbar({ onOpenShowreel, onOpenArchive, projectsCount = 
               Francis Uyota
             </span>
             <span className="text-[10px] font-semibold text-[#0B0D0C]/60 tracking-widest uppercase">
-              Filmmaker · Nigeria
+              Filmmaker &amp; Creative Director
             </span>
           </Link>
 

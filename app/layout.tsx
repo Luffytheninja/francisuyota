@@ -9,14 +9,14 @@ const PLAUSIBLE_DOMAIN = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Francis Uyota — Filmmaker, Creative Director & Photographer',
+    default: 'Francis Uyota — Filmmaker & Creative Director',
     template: '%s | Francis Uyota',
   },
   description:
-    'Francis Onabanjo (Francis Uyota) is a Nigerian filmmaker, creative director, and photographer based in Ibadan. His practice — rooted in surrealism — explores consciousness, loss, and visual identity. Selected for the Whitechapel Gallery, London.',
+    'Francis Onabanjo (Francis Uyota) is a Nigerian filmmaker and creative director. His practice — rooted in surrealism — explores consciousness, loss, and visual identity across narrative film, fashion campaigns, and music visuals. Selected for the Whitechapel Gallery, London.',
   keywords: [
     'Francis Uyota', 'Francis Onabanjo', 'Nigerian Filmmaker', 'Cinematographer',
-    'Creative Director', 'Photographer', 'Ibadan', 'Lagos', 'Under the Hood',
+    'Creative Director', 'Director', 'Lagos', 'Under the Hood',
     'Whitechapel Gallery', 'Almanak Media', 'African Cinema', 'Surrealism',
     'Director of Photography', 'DoP', 'Film', 'Music Video',
   ],
@@ -28,9 +28,9 @@ export const metadata: Metadata = {
     locale: 'en_GB',
     url: SITE_URL,
     siteName: 'Francis Uyota',
-    title: 'Francis Uyota — Filmmaker, Creative Director & Photographer',
+    title: 'Francis Uyota — Filmmaker & Creative Director',
     description:
-      'Nigerian filmmaker and creative director. Cinematography studio in Ibadan. Freelance worldwide.',
+      'Nigerian filmmaker and creative director. Narrative cinema, music videos, and commercial fashion worldwide.',
     images: [
       {
         url: `${SITE_URL}/og-image.jpg`,
@@ -44,8 +44,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@F_Uyota',
     creator: '@F_Uyota',
-    title: 'Francis Uyota — Filmmaker, Creative Director & Photographer',
-    description: 'Nigerian filmmaker and creative director. Cinematography studio in Ibadan.',
+    title: 'Francis Uyota — Filmmaker & Creative Director',
+    description: 'Nigerian filmmaker and creative director. Directing and cinematography worldwide.',
     images: [`${SITE_URL}/og-image.jpg`],
   },
   icons: {

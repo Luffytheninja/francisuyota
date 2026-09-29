@@ -17,10 +17,10 @@ export default function ShowreelModal({ isOpen, onClose }: ShowreelModalProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const chapters = [
-    { title: '01 / Narrative Fiction', time: 0 },
-    { title: '02 / Urban High-Speed (Okada)', time: 15 },
-    { title: '03 / Neon Afrobeats Visuals', time: 35 },
-    { title: '04 / Botanical Macro & Docu', time: 55 },
+    { title: '01 / Narrative Short Film', time: 0 },
+    { title: '02 / Music Videos & Visualizers', time: 15 },
+    { title: '03 / Fashion & Commercial', time: 35 },
+    { title: '04 / Documentary & Culture', time: 55 },
   ];
 
   useEffect(() => {
@@ -148,9 +148,7 @@ export default function ShowreelModal({ isOpen, onClose }: ShowreelModalProps) {
             </div>
 
             <div className="flex items-center gap-3 text-xs font-mono text-white/60">
-              <span>Aspect Ratio: 2.39:1 Anamorphic Scope</span>
-              <span>•</span>
-              <span>Sensor: Large Format Full Frame</span>
+              <span>Francis Uyota · Nigeria — Worldwide</span>
             </div>
           </div>
         </div>

@@ -112,7 +112,7 @@ export default function ComingSoon({
           transition={{ delay: 0.7, duration: 0.5 }}
           className="mt-16 text-xs text-[#F4F4F0]/20 tracking-widest uppercase"
         >
-          Francis Uyota · Ibadan, Nigeria
+          Francis Uyota · Nigeria — Worldwide
         </motion.p>
       </div>
     </div>

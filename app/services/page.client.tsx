@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight, MapPin, Globe, Camera, Film, Palette, Image as ImageIcon } from 'lucide-react';
+import { ArrowRight, Globe, Film, Palette, Zap, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import type { Service } from '@/lib/types';
 import Navbar from '@/components/Navbar';
@@ -12,17 +12,11 @@ interface ServicesClientProps {
 
 const ICON_MAP: Record<string, React.ReactNode> = {
   '🎬': <Film className="w-7 h-7" />,
-  '✈️': <Globe className="w-7 h-7" />,
+  '⚡': <Zap className="w-7 h-7" />,
+  '✨': <Sparkles className="w-7 h-7" />,
   '🎨': <Palette className="w-7 h-7" />,
-  '📷': <Camera className="w-7 h-7" />,
+  '✈️': <Globe className="w-7 h-7" />,
 };
-
-const GEAR = [
-  { category: 'Cameras', items: ['ARRI Alexa 35', 'ARRI Alexa Mini LF', 'RED V-Raptor 8K', 'Sony FX9 & FX6', '16mm Bolex H16'] },
-  { category: 'Optics', items: ['Cooke Anamorphic /i', 'Atlas Orion 2X', 'Zeiss Supreme Radiance', 'Leica R Vintage Cine-Mods'] },
-  { category: 'Lighting', items: ['Astera Titan Tubes', 'Aputure Electro Storm 2600W', 'ARRI SkyPanel S60-C', 'DJI Ronin 2 Pro'] },
-  { category: 'Post', items: ['DaVinci Resolve Studio 19', 'ACES Pipeline', 'Custom Film LUTs', 'HDR Monitoring'] },
-];
 
 export default function ServicesClient({ services }: ServicesClientProps) {
   const scrollToContact = () => {
@@ -48,22 +42,22 @@ export default function ServicesClient({ services }: ServicesClientProps) {
             <div className="flex items-center gap-3 mb-4">
               <span className="w-8 h-1 bg-[#50BF8E]" />
               <span className="text-xs font-black tracking-[0.2em] uppercase text-[#0B0D0C]/70">
-                What We Offer
+                Services &amp; Capabilities
               </span>
             </div>
             <h1
               className="text-5xl sm:text-7xl md:text-8xl font-black text-[#0B0D0C] tracking-tight leading-[0.88] mb-6"
               style={{ fontFamily: 'var(--font-encode-sans)' }}
             >
-              Services &amp;<br />
-              <span className="text-[#50BF8E]">Studio</span>
+              Directing &amp;<br />
+              <span className="text-[#50BF8E]">Cinematography</span>
             </h1>
             <p className="text-base sm:text-lg text-[#0B0D0C]/75 max-w-xl leading-relaxed font-medium">
-              A full-service cinematography studio based in Nigeria. Freelance shoots available worldwide — from Lagos to London and beyond.
+              Cinematic visual storytelling, creative direction, and full post-production. Available for worldwide narrative film, music video, and commercial fashion commissions.
             </p>
           </motion.div>
 
-          {/* Studio location badges */}
+          {/* Location / scope badges */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -71,9 +65,9 @@ export default function ServicesClient({ services }: ServicesClientProps) {
             className="flex flex-wrap gap-3 mt-8"
           >
             {[
-              { icon: MapPin, label: 'Nigeria Studio', color: '#0B0D0C' },
-              { icon: Globe, label: 'Worldwide Freelance', color: '#0B0D0C' },
-              { icon: Film, label: 'Film · MV · Docu · Commercial', color: '#0B0D0C' },
+              { icon: Globe, label: 'Worldwide Commission & Travel', color: '#0B0D0C' },
+              { icon: Film, label: 'Narrative · Music Video · Fashion · Commercial', color: '#0B0D0C' },
+              { icon: Sparkles, label: '4K HDR & ACES Color Pipeline', color: '#0B0D0C' },
             ].map(({ icon: Icon, label, color }) => (
               <div
                 key={label}
@@ -137,49 +131,6 @@ export default function ServicesClient({ services }: ServicesClientProps) {
               )}
             </motion.div>
           ))}
-        </div>
-      </section>
-
-      {/* ── Gear Locker ────────────────────────────────────────────────────── */}
-      <section className="py-16 sm:py-20 px-5 sm:px-8 lg:px-12 border-t-2 border-black/10">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="mb-12"
-          >
-            <p className="text-xs font-black tracking-[0.2em] uppercase text-[#0B0D0C]/70 mb-2">What We Shoot With</p>
-            <h2
-              className="text-4xl sm:text-5xl font-black text-[#0B0D0C] tracking-tight"
-              style={{ fontFamily: 'var(--font-encode-sans)' }}
-            >
-              Gear Locker
-            </h2>
-          </motion.div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
-            {GEAR.map(({ category, items }, i) => (
-              <motion.div
-                key={category}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.07, duration: 0.5 }}
-                className="p-5 rounded-2xl bg-[#0B0D0C] text-[#FFFAB3] border-2 border-black shadow-[4px_4px_0px_#50BF8E]"
-              >
-                <p className="text-[10px] font-black uppercase tracking-widest text-[#50BF8E] mb-3">{category}</p>
-                <ul className="flex flex-col gap-1.5">
-                  {items.map((item) => (
-                    <li key={item} className="text-xs text-white/80 flex items-center gap-1.5 font-medium">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#50BF8E] flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </section>
 

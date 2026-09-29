@@ -7,11 +7,11 @@ export const revalidate = 60;
 export const metadata: Metadata = {
   title: 'Services',
   description:
-    'Francis Uyota offers cinematography, creative direction, and photography services from his studio in Ibadan, Nigeria. Available for worldwide engagements.',
+    'Francis Uyota offers directing, cinematography, and creative direction services based in Nigeria, available for worldwide engagements across narrative film, music video, and commercial fashion.',
   openGraph: {
     title: 'Services | Francis Uyota',
     description:
-      'Cinematography studio in Ibadan. Freelance shoots worldwide. Film, music video, documentary, commercial, and creative direction.',
+      'Directing and cinematography for narrative film, music videos, fashion campaigns, and documentary worldwide.',
   },
 };
 

@@ -18,7 +18,7 @@ interface ShowcaseSectionProps {
 // Map each project category to its relevant brand color scheme
 function getCategoryTheme(cat: string = '') {
   const c = cat.toLowerCase();
-  if (c.includes('film') || c.includes('cinematography')) {
+  if (c.includes('short-film') || c.includes('film') || c.includes('cinema')) {
     return {
       border: 'border-[#50BF8E]',
       strokeColor: '#50BF8E',
@@ -28,17 +28,7 @@ function getCategoryTheme(cat: string = '') {
       accentBg: '#50BF8E',
     };
   }
-  if (c.includes('photo') || c.includes('editorial')) {
-    return {
-      border: 'border-[#8ECDE2]',
-      strokeColor: '#8ECDE2',
-      barBg: 'bg-[#8ECDE2]',
-      text: 'text-[#0B0D0C]',
-      shadow: 'hover:shadow-[6px_6px_0px_#8ECDE2]',
-      accentBg: '#8ECDE2',
-    };
-  }
-  if (c.includes('doc')) {
+  if (c.includes('fashion') || c.includes('campaign') || c.includes('commercial')) {
     return {
       border: 'border-[#DFB143]',
       strokeColor: '#DFB143',
@@ -48,7 +38,7 @@ function getCategoryTheme(cat: string = '') {
       accentBg: '#DFB143',
     };
   }
-  if (c.includes('music') || c.includes('commercial')) {
+  if (c.includes('music') || c.includes('visualizer')) {
     return {
       border: 'border-[#D4F88D]',
       strokeColor: '#D4F88D',
@@ -56,6 +46,16 @@ function getCategoryTheme(cat: string = '') {
       text: 'text-[#0B0D0C]',
       shadow: 'hover:shadow-[6px_6px_0px_#D4F88D]',
       accentBg: '#D4F88D',
+    };
+  }
+  if (c.includes('doc') || c.includes('event') || c.includes('culture')) {
+    return {
+      border: 'border-[#8ECDE2]',
+      strokeColor: '#8ECDE2',
+      barBg: 'bg-[#8ECDE2]',
+      text: 'text-[#0B0D0C]',
+      shadow: 'hover:shadow-[6px_6px_0px_#8ECDE2]',
+      accentBg: '#8ECDE2',
     };
   }
   return {
@@ -225,7 +225,7 @@ export default function ShowcaseSection({ projects, onSelectProject, onOpenArchi
           <div>
             <p className="text-[11px] font-black tracking-[0.2em] uppercase text-[#50BF8E] mb-2 flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 fill-[#50BF8E]" />
-              Cinematography Studio · Nigeria — Worldwide
+              Cinematography &amp; Directing · Nigeria — Worldwide
             </p>
             <h3
               className="text-2xl sm:text-3xl font-black text-white tracking-tight"
@@ -234,7 +234,7 @@ export default function ShowcaseSection({ projects, onSelectProject, onOpenArchi
               Available for Worldwide Engagements
             </h3>
             <p className="text-sm text-white/60 mt-1">
-              Film · Music Video · Documentary · Creative Direction · Photography
+              Narrative Film · Music Video · Fashion &amp; Commercial · Documentary · Creative Direction
             </p>
           </div>
           <Link
@@ -286,10 +286,30 @@ function MediaCard({
       className={`group relative w-full flex flex-col rounded-2xl sm:rounded-3xl overflow-hidden bg-[#0B0D0C] cursor-pointer shadow-xl border-2 sm:border-[3px] ${theme.border} transition-all duration-300 ${theme.shadow}`}
       onClick={onSelect}
       data-cursor="WATCH"
+      onMouseEnter={(e) => {
+        const vid = e.currentTarget.querySelector('video');
+        if (vid) vid.play().catch(() => {});
+      }}
+      onMouseLeave={(e) => {
+        const vid = e.currentTarget.querySelector('video');
+        if (vid) {
+          vid.pause();
+          vid.currentTime = 0;
+        }
+      }}
     >
       {/* Media Viewport */}
       <div className={`relative w-full ${aspect} overflow-hidden bg-[#0B0D0C]`}>
-        {thumb && (
+        {project.videoUrl ? (
+          <video
+            src={project.videoUrl}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            className="absolute inset-0 w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+          />
+        ) : thumb ? (
           <Image
             src={thumb}
             alt={project.title}
@@ -297,13 +317,13 @@ function MediaCard({
             className="object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
             sizes="(max-width: 768px) 100vw, 800px"
           />
-        )}
+        ) : null}
 
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity pointer-events-none" />
 
         {/* Play dot */}
-        <div className="absolute top-4 right-4 sm:top-5 sm:right-5 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#FFFAB3] border-2 border-[#0B0D0C] flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-[#50BF8E] transition-all duration-300">
+        <div className="absolute top-4 right-4 sm:top-5 sm:right-5 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#FFFAB3] border-2 border-[#0B0D0C] flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-[#50BF8E] transition-all duration-300 pointer-events-none">
           <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-[#0B0D0C] text-[#0B0D0C] ml-0.5" />
         </div>
       </div>

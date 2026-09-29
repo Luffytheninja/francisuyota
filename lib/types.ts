@@ -8,7 +8,8 @@ export interface Project {
   _id: string;
   title: string;
   category: string;
-  youtubeId: string;
+  youtubeId?: string;
+  videoUrl?: string; // Local video path e.g. '/videos/short-film/MANEYEYEDGOD EDIT.mp4'
   slug?: { current: string };
   poster?: any; // Sanity image reference — use urlFor() from lib/sanity.ts
   featured?: boolean;
