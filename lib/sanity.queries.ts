@@ -167,12 +167,28 @@ const serviceFields = `
 
 export async function getProjects(): Promise<Project[]> {
   try {
-    const projects = await sanityClient.fetch(
+    const sanityProjects: Project[] = await sanityClient.fetch(
       `*[_type == "project"] | order(_createdAt desc) { ${projectFields} }`,
       {},
       { next: { revalidate: 60 }, cache: 'no-store' }
     );
-    return projects?.length > 0 ? projects : DEFAULT_PROJECTS;
+    if (!sanityProjects || sanityProjects.length === 0) {
+      return DEFAULT_PROJECTS;
+    }
+
+    // Normalize categories (e.g., "short-films" -> "short-film")
+    const normalizedSanity: Project[] = sanityProjects.map((p) => ({
+      ...p,
+      category: p.category === 'short-films' ? 'short-film' : p.category,
+    }));
+
+    // Merge: include DEFAULT_PROJECTS and any unique Sanity projects
+    const defaultTitles = new Set(DEFAULT_PROJECTS.map((p) => p.title.toLowerCase().trim()));
+    const uniqueSanity = normalizedSanity.filter(
+      (p) => !defaultTitles.has(p.title?.toLowerCase().trim())
+    );
+
+    return [...DEFAULT_PROJECTS, ...uniqueSanity];
   } catch {
     return DEFAULT_PROJECTS;
   }
@@ -180,12 +196,9 @@ export async function getProjects(): Promise<Project[]> {
 
 export async function getFeaturedProjects(): Promise<Project[]> {
   try {
-    const projects = await sanityClient.fetch(
-      `*[_type == "project" && featured == true] | order(_createdAt desc) { ${projectFields} }`,
-      {},
-      { next: { revalidate: 60 }, cache: 'no-store' }
-    );
-    return projects?.length > 0 ? projects : DEFAULT_PROJECTS.filter((p) => p.featured);
+    const all = await getProjects();
+    const featured = all.filter((p) => p.featured);
+    return featured.length > 0 ? featured : all;
   } catch {
     return DEFAULT_PROJECTS.filter((p) => p.featured);
   }
