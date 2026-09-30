@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, ArrowRight, Sparkles } from 'lucide-react';
 import Image from 'next/image';
@@ -69,10 +69,9 @@ function getCategoryTheme(cat: string = '') {
 }
 
 export default function ShowcaseSection({ projects, onSelectProject, onOpenArchive }: ShowcaseSectionProps) {
-  // Only display actual uploaded projects
   const uploadedProjects = projects;
 
-  // Extract unique active categories present in the uploaded works
+  // Extract unique active categories present in the works
   const categories = useMemo(() => {
     const cats = new Set(uploadedProjects.map((p) => p.category).filter(Boolean));
     return ['all', ...Array.from(cats)];
@@ -85,13 +84,19 @@ export default function ShowcaseSection({ projects, onSelectProject, onOpenArchi
     return uploadedProjects.filter((p) => p.category?.toLowerCase() === activeCategory.toLowerCase());
   }, [uploadedProjects, activeCategory]);
 
+  // Check if any project is explicitly portrait
+  const hasPortraitItems = useMemo(
+    () => filteredProjects.some((p) => p.aspectRatio === 'portrait'),
+    [filteredProjects]
+  );
+
   return (
     <section
       id="works"
       className="relative w-full bg-[#FFFAB3] text-[#0B0D0C] py-20 sm:py-28 px-4 sm:px-8 lg:px-12 select-none"
     >
       <div className="max-w-6xl mx-auto">
-        {/* Section Heading matching wireframe */}
+        {/* Section Heading */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 sm:mb-12 gap-4">
           <motion.div
             initial={{ opacity: 0, x: -24 }}
@@ -123,7 +128,7 @@ export default function ShowcaseSection({ projects, onSelectProject, onOpenArchi
           </motion.button>
         </div>
 
-        {/* Category Filter Pills (showing only categories with uploaded works) */}
+        {/* Category Filter Pills */}
         {categories.length > 2 && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -151,35 +156,31 @@ export default function ShowcaseSection({ projects, onSelectProject, onOpenArchi
           </motion.div>
         )}
 
-        {/* Responsive Layout Grid showing only uploaded works */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+        {/* Organized Clean Works Grid:
+            - When all projects are landscape: clean uniform 2-column grid with landscape/shorter cards.
+            - When there's a mix with portrait: organized bento layout.
+            - Mobile: responsive landscape/square framing.
+        */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, idx) => {
-              // Wireframe layout cadence: item 0 is wide, 1 & 2 are pairs, 3 & 4 are pairs, 5 is wide, etc.
-              const isFullWidth =
-                filteredProjects.length === 1 ||
-                idx === 0 ||
-                (idx > 0 && idx % 5 === 0);
-
-              // Choose aspect ratio based on wireframe rhythm
-              let aspectClass = 'aspect-[16/9] sm:aspect-[16/8]';
-              if (!isFullWidth) {
-                // Alternating portrait / landscape pairs like wireframe
-                aspectClass = (Math.floor(idx / 2) % 2 === 1)
-                  ? 'aspect-[3/4]'
-                  : 'aspect-[16/10]';
-              }
+              const isPortrait = project.aspectRatio === 'portrait';
+              const isBentoSpan = hasPortraitItems && isPortrait;
+              
+              // Standard organized landscape frame for grid cards
+              const aspectClass = isPortrait
+                ? 'aspect-[3/4] sm:aspect-[4/5]'
+                : 'aspect-[16/10] sm:aspect-[16/10]';
 
               return (
                 <div
                   key={project._id || `work-${idx}`}
-                  className={isFullWidth ? 'sm:col-span-2' : 'sm:col-span-1'}
+                  className={isBentoSpan ? 'sm:col-span-1' : 'sm:col-span-1'}
                 >
                   <MediaCard
                     project={project}
                     aspect={aspectClass}
-                    delay={idx * 0.05}
-                    large={isFullWidth}
+                    delay={idx * 0.04}
                     onSelect={() => {
                       trackProjectView(project.title, project.category);
                       onSelectProject(project);
@@ -250,28 +251,45 @@ export default function ShowcaseSection({ projects, onSelectProject, onOpenArchi
   );
 }
 
-// ─── MediaCard Component with Category Brand Strokes & Wireframe Bottom Bar ───
+// ─── MediaCard Component with Category Brand Strokes & Responsive Video Player ───
 
 function MediaCard({
   project,
   aspect,
   delay = 0,
-  large = false,
   onSelect,
 }: {
   project: Project;
   aspect: string;
   delay?: number;
-  large?: boolean;
   onSelect: () => void;
 }) {
   const theme = getCategoryTheme(project.category);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const thumb = project.poster
-    ? urlFor(project.poster).width(large ? 1600 : 900).height(large ? 900 : 700).url()
+    ? urlFor(project.poster).width(1200).height(800).url()
     : project.youtubeId
     ? `https://img.youtube.com/vi/${project.youtubeId}/hqdefault.jpg`
     : '';
+
+  const handleMouseEnter = () => {
+    if (videoRef.current) {
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Ignore auto-play abort or interruption
+        });
+      }
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  };
 
   return (
     <motion.div
@@ -286,49 +304,41 @@ function MediaCard({
       className={`group relative w-full flex flex-col rounded-2xl sm:rounded-3xl overflow-hidden bg-[#0B0D0C] cursor-pointer shadow-xl border-2 sm:border-[3px] ${theme.border} transition-all duration-300 ${theme.shadow}`}
       onClick={onSelect}
       data-cursor="WATCH"
-      onMouseEnter={(e) => {
-        const vid = e.currentTarget.querySelector('video');
-        if (vid) vid.play().catch(() => {});
-      }}
-      onMouseLeave={(e) => {
-        const vid = e.currentTarget.querySelector('video');
-        if (vid) {
-          vid.pause();
-          vid.currentTime = 0;
-        }
-      }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {/* Media Viewport */}
       <div className={`relative w-full ${aspect} overflow-hidden bg-[#0B0D0C]`}>
         {project.videoUrl ? (
           <video
+            ref={videoRef}
             src={project.videoUrl}
             muted
             loop
             playsInline
             preload="metadata"
-            className="absolute inset-0 w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+            className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
           />
         ) : thumb ? (
           <Image
             src={thumb}
             alt={project.title}
             fill
-            className="object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-            sizes="(max-width: 768px) 100vw, 800px"
+            className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+            sizes="(max-width: 768px) 100vw, 600px"
           />
         ) : null}
 
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity pointer-events-none" />
+        {/* Subtle gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity pointer-events-none" />
 
-        {/* Play dot */}
+        {/* Play badge dot */}
         <div className="absolute top-4 right-4 sm:top-5 sm:right-5 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#FFFAB3] border-2 border-[#0B0D0C] flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-[#50BF8E] transition-all duration-300 pointer-events-none">
           <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-[#0B0D0C] text-[#0B0D0C] ml-0.5" />
         </div>
       </div>
 
-      {/* Wireframe-exact Bottom Bar in Category Brand Color */}
+      {/* Structured Bottom Bar in Category Brand Color */}
       <div
         className={`w-full ${theme.barBg} ${theme.text} px-4 sm:px-5 py-3 sm:py-3.5 flex items-center justify-between border-t-2 ${theme.border}`}
       >

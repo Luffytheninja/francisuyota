@@ -16,9 +16,9 @@ interface ProjectModalProps {
 }
 
 export default function ProjectModal({ project, onClose, onSelectProject, projects }: ProjectModalProps) {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
 
-  useEffect(() => { setIsPlaying(false); }, [project?._id]);
+  useEffect(() => { setIsPlaying(true); }, [project?._id]);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };

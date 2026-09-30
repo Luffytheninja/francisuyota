@@ -18,6 +18,7 @@ export interface Project {
   role?: string;
   client?: string;
   tags?: string[];
+  aspectRatio?: 'landscape' | 'portrait' | 'square';
 }
 
 // ─── Artist / About ──────────────────────────────────────────────────────────
